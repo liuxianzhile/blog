@@ -1,0 +1,240 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cfn</groupId>
+  <artifactId>blog</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>blog Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+	<!-- 版本号控制器 -->
+	<properties>
+		<!-- 分页版本号 -->
+		<pagehelper.version>3.6.3</pagehelper.version>
+		<!-- 测试包版本号 -->
+		<junit.version>4.12</junit.version>
+		<!-- spring版本号 -->		
+		<spring.version>4.3.2.RELEASE</spring.version>
+		<!-- mybatis版本号 -->
+		<mybatis.version>3.2.8</mybatis.version>
+		<!-- spring整合mybatis包的版本号 -->
+		<mybatis.spring.version>1.2.2</mybatis.spring.version>
+		<!-- log4j2日志版本 -->
+		<log4j2.version>2.1</log4j2.version>
+		<!-- 保证整个工程是UTF-8编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+	<dependencies>
+    	<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+      		<version>${junit.version}</version>
+      		
+      		<!--依赖范围。在项目发布过程中，帮助决定哪些构件被包括进来。欲知详情请参考依赖机制。  
+                - compile ：默认范围，用于编译  
+                - provided：类似于编译，但支持你期待jdk或者容器提供，类似于classpath  
+                - runtime: 在执行时需要使用  
+                - test:    用于test任务时使用  
+                - system: 需要外在提供相应的元素。通过systemPath来取得  
+                - systemPath: 仅用于范围为system。提供相应的路径  
+                - optional:   当项目自身被依赖时，标注依赖是否传递。用于连续依赖时使用-->  
+      		<scope>test</scope>
+    	</dependency>
+    	
+    	<!-- 阿里巴巴数据源 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.29</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.46</version>
+		</dependency>
+		
+		<!-- 添加json支持 -->
+		 <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.8.4</version>
+        </dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.8.4</version>
+		</dependency>
+		<dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+		<!-- 添加json支持 -->
+    	
+    	<!-- mybatis start -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis.spring.version}</version>
+		</dependency>
+		<!-- 分页 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>${pagehelper.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>com.github.abel533</groupId>
+            <artifactId>mapper</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+		<!-- mybatis end -->
+		
+		<!-- spring4 start -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+		<!-- springMVC start -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- springMVC end -->
+		<!-- spring4 end -->
+		
+		<!-- log4j2 start -->
+		<dependency>
+      		<groupId>org.apache.logging.log4j</groupId>
+      		<artifactId>log4j-core</artifactId>
+      		<version>${log4j2.version}</version>
+      	</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>${log4j2.version}</version>
+    	</dependency>
+		<!-- log4j2 end -->
+		
+		<!-- jackson start -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		<!-- jackson end -->
+		
+		
+		<!-- lombok -->
+		<dependency>
+	        <groupId>org.projectlombok</groupId>
+	        <artifactId>lombok</artifactId>
+	        <version>1.16.10</version>
+	    </dependency>
+  	</dependencies>
+  	<profiles>
+  		<profile>
+  			<id>test</id>	
+  			<activation>
+  				<!-- 该profile是默认激活状态 -->
+  				<activeByDefault>false</activeByDefault>
+  			</activation>
+  			<properties>
+  				<profiles.activation>test</profiles.activation>
+  			</properties>
+  		</profile>
+  		
+  		<profile>
+			<id>jdk-1.8</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.8</maven.compiler.source>
+				<maven.compiler.target>1.8</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+  	</profiles>
+  	
+  	<!-- <build>
+  		所要激活的环境所需的配置文件
+  		<filters>
+  			<filter>src/main/resources/${profiles.activation}/jdbc.properties</filter>
+  		</filters>
+  	
+  		替换的目标文件（替换的是值，不是整个jdbc.properties替换）
+  		<resources>
+  			<resource>
+  				<directory>src/main/resources/</directory>
+  				<filtering>true</filtering>
+  			</resource>
+  		</resources>
+  	</build> -->
+</project>

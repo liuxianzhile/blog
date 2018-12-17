@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"  
+	xmlns:mvc="http://www.springframework.org/schema/mvc"  
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/websocket 
+		http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd">
+	 
+	<!-- 配置整合mybatis过程 -->
+	<!-- 1.配置数据库相关参数properties的属性：${url} -->
+	<!-- <context:property-placeholder location="classpath:jdbc.properties" /> -->
+	
+	<!-- PropertyPlaceholderConfigurer可以将上下文（配置文件）中的属性值放在另一个单独的标准java Properties文件中去。在XML文件中用${key}替换指定的properties文件中的值。 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:jdbc.properties"></property>
+		<!-- 处理一个及一个以上配置文件 -->
+		<property name="locations">
+			<list>
+				<!-- <value>classpath:one.properties</value> -->			
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property> 
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+	
+	<!-- 2.数据库连接池 -->
+	<!-- DruidDataSource配置属性列表  -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${jdbc.url}"/>
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat" />
+		
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="maxActive" value="20" />
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />     
+		
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxOpenPreparedStatements" value="20" />
+		
+		<!-- 超过时间限制是否回收 --> 
+		<property name="removeAbandoned" value="true" /> 
+		<!-- 超时时间；单位为秒。180秒=3分钟 --> 
+		<property name="removeAbandonedTimeout" value="180" /> 
+		<!-- 关闭abanded连接时输出错误日志 --> 
+		<property name="logAbandoned" value="true" />
+	</bean>
+	
+	<!-- DriverManager类的主要作用是管理注册到DriverManager中的JDBC驱动程序，并根据需要使用JDBC驱动程序建立与数据服务器的网络连接。 -->
+	<!-- <bean scope="singleton" id="dataSource"    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.dirver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />        
+	</bean> -->
+	
+	<!-- JNDI导入数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/mmcDB"/>注意：这里的value值就是在server.xml或者context.xml中配置的name值一样。
+	</bean> -->
+	<!-- <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/mmcDB" /> -->
+	
+	<!-- 3、配置mybatis的SessionFactory -->
+	<!-- mybatis的核心管理类，通过dataSource指定数据源，configLocation指定mybatis的配置文件，mapperLocations指定mapper的xml文件。 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 配置全局属性 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:com/blog/mapper/*Mapper.xml</value>
+			</array>
+		</property>
+		<!-- 扫描entity包 使用别名 配置此项则在mapper中可以直接使用实体类名，而不需要使用全路径名 -->
+		<property name="typeAliasesPackage" value="com/blog/domain" />
+	</bean>
+	
+	<!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 自动扫描注册mapper接口类（接口类实现mybatis） -->
+	<!-- 自动扫描注册mapper接口类到spring工厂中，当你的mapper接口类存在于多个目录下时，basePackage的值可以配置成多个目录，中间用英文逗号隔开即可。 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- ref的作用是将目标bean定义的实例注入到属性或构造器中，一般作用于对象类型，而SqlSessionFactoryName是字符串类型，应该使用value。 -->
+  		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+  		<property name="basePackage" value="com.blog.dao"/>
+ 	</bean>
+	
+	<!-- 3、配置Spring -->
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 注入数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 4、配置基于注解的声明式事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

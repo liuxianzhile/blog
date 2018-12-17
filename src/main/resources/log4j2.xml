@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    status : 这个用于设置log4j2自身内部的信息输出,可以不设置,当设置成trace时,会看到log4j2内部各种详细输出
+    monitorInterval : 用于指定log4j自动重新配置的监测间隔时间，单位是s,最小是5s.
+-->
+<Configuration status="WARN" monitorInterval="30">
+    <!--  日志级别  共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF. 
+    		All:最低等级的，用于打开所有日志记录.
+			Trace:是追踪，就是程序推进以下，你就可以写个trace输出，所以trace应该会特别多，不过没关系，我们可以设置最低日志级别不让他输出.
+			Debug:指出细粒度信息事件对调试应用程序是非常有帮助的.
+			Info:消息在粗粒度级别上突出强调应用程序的运行过程.
+			Warn:输出警告及warn以下级别的日志.
+			Error:输出错误信息日志.
+			Fatal:输出每个严重的错误事件将会导致应用程序的退出的日志.
+			OFF:最高等级的，用于关闭所有日志记录.
+        	程序会打印高于或等于所设置级别的日志，设置的日志等级越高，打印出来的日志就越少。
+    -->
+    <!-- 配置日志文件输出目录、以及输出格式 -->
+    <Properties>
+    	<!--	
+    			%d{HH:mm:ss.SSS}  	毫秒的时间
+				%t  				当前线程名称
+				%-5level  			日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
+				%c{1}  				类名
+				%L 					输出行号
+				%msg 				日志文本
+				%n 					换行
+			其他常用的占位符有：
+				%F 					输出所在的类文件名，如Client.java
+				%M 					输出所在方法名
+				%l  				输出语句所在的行数, 包括类名、方法名、文件名、行数 (这个比较强大)
+		-->
+        <Property name="patternLayout">[%d{yyyy-MM-dd'T'HH:mm:ss,SSSXXX}] %-5p [%t] %c{2} - %m%n]</Property>
+        
+        <!--
+        	${sys:catalina.home} 等价于 System.getProperty("catalina.home") 就是Tomcat的根目录：  C:\apache-tomcat-7.0.77
+        	<Property name="logdir">${sys:catalina.home}</Property>
+        -->
+        <Property name="logdir">./log</Property>
+    </Properties>
+    <Appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) -->
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="${patternLayout}"/>
+        </Console>
+        <Async name="ASYNC">
+            <AppenderRef ref="CONSOLE"/>
+        </Async>
+
+        <!-- 
+        	name 和 root 里面定义的相对应
+            append 决定是否在原日志末尾追加日志。调试的时候可以设置为false,很方便
+        -->
+        <RollingFile name="DebugLogger" fileName="${logdir}/logs/debug/log.log"
+                     filePattern="${logdir}/debug/log-%i.log" append="true">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${patternLayout}"/>
+            <!--<SizeBasedTriggeringPolicy size="1MB"/>-->
+            <DefaultRolloverStrategy max="10"/>
+            <Policies>
+                <!--根据时间来滚动-->
+                <!--<TimeBasedTriggeringPolicy modulate="true" interval="1"/>-->
+
+                <!--根据文件大小来滚动-->
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="InfoLogger" fileName="${logdir}/logs/info/log.log"
+                     filePattern="${logdir}/info/log-%i.log" append="true">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${patternLayout}"/>
+            <!--<SizeBasedTriggeringPolicy size="1MB"/>-->
+            <DefaultRolloverStrategy max="10"/>
+            <Policies>
+                <!--根据时间来滚动-->
+                <!--<TimeBasedTriggeringPolicy modulate="true" interval="1"/>-->
+
+                <!--根据文件大小来滚动-->
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="WarnLogger" fileName="${logdir}/logs/warn/log.log"
+                     filePattern="${logdir}/warn/log-%i.log" append="true">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${patternLayout}"/>
+            <!--<SizeBasedTriggeringPolicy size="1MB"/>-->
+            <DefaultRolloverStrategy max="10"/>
+            <Policies>
+                <!--根据时间来滚动-->
+                <!--<TimeBasedTriggeringPolicy modulate="true" interval="1"/>-->
+
+                <!--根据文件大小来滚动-->
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="ErrorLogger" fileName="${logdir}/logs/error/log.log"
+                     filePattern="${logdir}/error/log-%i.log" append="true">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${patternLayout}"/>
+            <!--<SizeBasedTriggeringPolicy size="1MB"/>-->
+            <DefaultRolloverStrategy max="10"/>
+            <Policies>
+                <!--根据时间来滚动-->
+                <!--<TimeBasedTriggeringPolicy modulate="true" interval="1"/>-->
+
+                <!--根据文件大小来滚动-->
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+        </RollingFile>
+
+
+        <!--<RollingFile name="importDataLog" fileName="${logdir}/logs/importData/log.log"-->
+        <!--filePattern="${logdir}/logs/importData/log-%i.log" append="true">-->
+        <!--<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>-->
+        <!--<PatternLayout pattern="${patternLayout}"/>-->
+        <!--&lt;!&ndash;<SizeBasedTriggeringPolicy size="1MB"/>&ndash;&gt;-->
+        <!--<DefaultRolloverStrategy max="10"/>-->
+        <!--<Policies>-->
+        <!--&lt;!&ndash;根据时间来滚动&ndash;&gt;-->
+        <!--&lt;!&ndash;<TimeBasedTriggeringPolicy modulate="true" interval="1"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;根据文件大小来滚动&ndash;&gt;-->
+        <!--<SizeBasedTriggeringPolicy size="20 MB"/>-->
+        <!--</Policies>-->
+        <!--</RollingFile>-->
+
+        <!--<appender name="importDataLog" class="org.apache.log4j.DailyRollingFileAppender">
+            <param name="encoding" value="UTF-8" />
+            <param name="File" value="${logdir}/logs/importData/log.log" />
+            <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="${patternLayout}" />
+            </layout>
+        </appender>-->
+    </Appenders>
+    <loggers>
+
+        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+        <logger name="org.springframework" level="INFO"></logger>
+        <!--<logger name="org.mybatis" level="INFO"></logger>-->
+        <!--   设置日志输出级别   -->
+        <root level="debug">
+            <AppenderRef ref="ASYNC"/>
+            <appender-ref ref="DebugLogger"/>
+            <appender-ref ref="InfoLogger"/>
+            <appender-ref ref="WarnLogger"/>
+            <appender-ref ref="ErrorLogger"/>
+        </root>
+
+        <!--<logger name="yu" level="info" additivity="false">-->
+        <!--<appender-ref ref="importDataLog"/>-->
+        <!--</logger>-->
+        <!--<logger name="com.inter3i.sun.api.ota.v1.job.schedule.SegmenteJob" level="info" additivity="false">-->
+        <!--<appender-ref ref="importDataLog"/>-->
+        <!--</logger>-->
+        <!--<logger name="com.inter3i.sun.api.ota.v1.job.ImportDataAdapter" level="info" additivity="false">-->
+        <!--<appender-ref ref="importDataLog"/>-->
+        <!--</logger>-->
+        <!--<logger name="com.inter3i.sun.api.ota.v1.job.SegmentAdapter" level="info" additivity="false">-->
+        <!--<appender-ref ref="importDataLog"/>-->
+        <!--</logger>-->
+    </loggers>
+</Configuration>
