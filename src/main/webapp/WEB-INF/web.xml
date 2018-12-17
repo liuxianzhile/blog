@@ -12,14 +12,14 @@
     	<init-param>
         	<param-name>contextConfigLocation</param-name>
         	<!-- <param-value>/WEB-INF/spring-servlet.xml</param-value> --> <!-- 默认 -->
-        	<param-value>classpath:spring-*.xml</param-value>
+        	<param-value>classpath:spring-servlet.xml</param-value>
     	</init-param>
 	    <load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 	    <servlet-name>spring</servlet-name>
-	    <url-pattern>*.do</url-pattern>
+	    <url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<!-- Spring MVC配置 -->
 	

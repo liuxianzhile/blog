@@ -38,5 +38,5 @@
 		(3)、配置了<context:component-scan />，就不用在配置<context:annotation-config/>, 因为前者已经包含了后者。
 		(4)、<context:annotation-config/>的作用是向spring容器注入AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor 及RequiredAnnotationBeanPostProcessor 四个beanPostProcessor。从而使得@Autowired等注解生效。
 	 -->
-	 <context:component-scan base-package="com.blog.service" />
+	 <context:component-scan base-package="com.blog.*" />
 </beans>
