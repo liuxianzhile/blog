@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 
 /**
- * 
+ * 返回前端JSON封装
  * @file DefaultResultVO.java
  * @author FuNian Cui
  * @date 2018年12月14日 下午4:47:49
@@ -33,26 +33,26 @@ public class DefaultResultVO implements Serializable{
         this.msg = msg;
     }
 
-    public DefaultResultVO success() {
+    public static DefaultResultVO success() {
     	DefaultResultVO result = new DefaultResultVO();
         result.setResultCode(ResultCodeEnum.SUCCESS);
         return result;
     }
     
-    public DefaultResultVO success(Object data) {
+    public static DefaultResultVO success(Object data) {
     	DefaultResultVO result = new DefaultResultVO();
         result.setResultCode(ResultCodeEnum.SUCCESS);
         result.setData(data);
         return result;
     }
 
-    public DefaultResultVO failure(ResultCodeEnum resultCode) {
+    public static DefaultResultVO failure(ResultCodeEnum resultCode) {
     	DefaultResultVO result = new DefaultResultVO();
         result.setResultCode(resultCode);
         return result;
     }
 
-    public DefaultResultVO failure(ResultCodeEnum resultCode, Object data) {
+    public static DefaultResultVO failure(ResultCodeEnum resultCode, Object data) {
     	DefaultResultVO result = new DefaultResultVO();
         result.setResultCode(resultCode);
         result.setData(data);
