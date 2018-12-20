@@ -60,7 +60,7 @@ public class DefaultResultVO implements Serializable{
     }
     
 	private void setResultCode(ResultCodeEnum success) {
-		this.code = success.code();
-        this.msg = success.message();
+		this.code = success.getCode();
+        this.msg = success.getMessage();
 	}
 }
