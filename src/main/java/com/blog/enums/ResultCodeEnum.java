@@ -56,15 +56,23 @@ public enum ResultCodeEnum {
         this.message = message;
     }
 
-    public Integer code() {
-        return this.code;
-    }
+    public Integer getCode() {
+		return code;
+	}
 
-    public String message() {
-        return this.message;
-    }
+	public void setCode(Integer code) {
+		this.code = code;
+	}
 
-    public static String getMessage(String name) {
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public static String getMessage(String name) {
         for (ResultCodeEnum item : ResultCodeEnum.values()) {
             if (item.name().equals(name)) {
                 return item.message;
@@ -95,7 +103,7 @@ public enum ResultCodeEnum {
             if (codeList.contains(ApiResultCode.code)) {
                 System.out.println(ApiResultCode.code);
             } else {
-                codeList.add(ApiResultCode.code());
+                codeList.add(ApiResultCode.getCode());
             }
         }
     }
