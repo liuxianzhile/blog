@@ -25,12 +25,32 @@ public class DefaultResultVO implements Serializable{
     private String msg;
 
     private Object data;
-
-    public DefaultResultVO() {}
-
+    
+    public DefaultResultVO() {
+		super();
+	}
+    
     public DefaultResultVO(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+	public DefaultResultVO(Integer code, String msg, Object data) {
+		super();
+		this.code = code;
+		this.msg = msg;
+		this.data = data;
+	}
+
+	public DefaultResultVO(ResultCodeEnum resultCode) {
+    	this.code = resultCode.getCode();
+    	this.msg = resultCode.getMessage();
+    }
+    
+    public DefaultResultVO(ResultCodeEnum resultCode, Object data) {
+    	this.code = resultCode.getCode();
+    	this.msg = resultCode.getMessage();
+    	this.data = data;
     }
 
     public static DefaultResultVO success() {
