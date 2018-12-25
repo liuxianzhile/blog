@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.blog.annotation.advice.ProcessAdvice;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
 /**
@@ -16,8 +16,12 @@ import com.blog.annotation.advice.ProcessAdvice;
  * @author FuNian Cui
  * @date 2018年12月21日 下午3:19:44
  */
+
+//java中元注解有四个： @Retention @Target @Document @Inherited；
+//@Document：说明该注解将被包含在javadoc中
+//@Inherited：说明子类可以继承父类中的该注解
 //Target注解决定注解可以加在哪些成分上，如加在类身上，或者属性身上，或者方法身上等成分
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.METHOD})
 //Retention注解决定注解的生命周期
 /*@Retention元注解的讲解：其三种取值：
 RetentionPolicy.SOURCE  ----> Java源文件(.java文件) 该注解只在java源文件中存在，编译成.class文件后注解就不存在了
@@ -25,12 +29,10 @@ RetentionPolicy.CLASS   ----> .class文件  注解在java源文件(.java文件)�
 RetentionPolicy.RUNTIME ----> 内存中的字节码*/
 @Retention(RetentionPolicy.RUNTIME)
 
-
 public @interface Before {
-	
 	/*
 	 * 定义基本属性value
 	 * default指定value默认缺省值
 	 */
-	Class<? extends ProcessAdvice>[] value() default ProcessAdvice.class;
+	Class<? extends HandlerInterceptorAdapter>[] value() default HandlerInterceptorAdapter.class;
 }
