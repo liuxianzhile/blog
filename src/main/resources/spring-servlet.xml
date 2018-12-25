@@ -21,22 +21,26 @@
 	<!-- 2.静态资源默认servlet配置
 		(1)加入对静态资源的处理：js,gif,png
 		(2)允许使用"/"做整体映射
-	 -->
-	 <mvc:default-servlet-handler/>
+	-->
+	<mvc:default-servlet-handler/>
 	 
-	 <!-- 3.配置jsp 显示ViewResolver -->
-	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	 	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	<!-- 3.配置jsp 显示ViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 	 	<property name="prefix" value="/WEB-INF/jsp/" />
 	 	<property name="suffix" value=".jsp" />
-	 </bean>
+	</bean>
 	 
-	 <!-- 4.扫描web相关的bean
-	 	启动spring的组件扫描功能
+	<!-- 4.扫描web相关的bean
+		启动spring的组件扫描功能
 		(1)、扫描base-package包或者子包下面的Java文件，如果扫描到有@controller、@Service、@Repository、@Component等注解的java类，就会将这些bean注册到工厂中。
 		(2)、使用分号来分隔多个扫描包。
 		(3)、配置了<context:component-scan />，就不用在配置<context:annotation-config/>, 因为前者已经包含了后者。
 		(4)、<context:annotation-config/>的作用是向spring容器注入AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor 及RequiredAnnotationBeanPostProcessor 四个beanPostProcessor。从而使得@Autowired等注解生效。
-	 -->
-	 <context:component-scan base-package="com.blog.*" />
+	-->
+	<context:component-scan base-package="com.blog.*" />
+	
+	<mvc:interceptors>
+        <bean class="com.blog.interceptor.UserInfoInterceptor" />
+    </mvc:interceptors>
 </beans>
