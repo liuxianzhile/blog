@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- BlogUserMapper，，对应表blog_user -->
+<mapper namespace="com.blog.dao.BlogUserMapper">
+    <!-- 返回结果集Map -->
+    <resultMap id="BaseResultMap" type="com.blog.model.BlogUser"> 
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_no" jdbcType="INTEGER" property="userNo" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+        <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
+        <result column="user_tags" jdbcType="VARCHAR" property="userTags" />
+        <result column="user_qq" jdbcType="VARCHAR" property="userQq" />
+        <result column="user_avatar_type" jdbcType="INTEGER" property="userAvatarType" />
+        <result column="user_avatar_URL" jdbcType="VARCHAR" property="userAvatarUrl" />
+        <result column="user_online_flag" jdbcType="CHAR" property="userOnlineFlag" />
+        <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+        <result column="user_status" jdbcType="INTEGER" property="userStatus" />
+        <result column="user_latest_login_time" jdbcType="BIGINT" property="userLatestLoginTime" />
+        <result column="user_latest_login_IP" jdbcType="VARCHAR" property="userLatestLoginIp" />
+        <result column="user_checkin_time" jdbcType="BIGINT" property="userCheckinTime" />
+        <result column="user_skin" jdbcType="VARCHAR" property="userSkin" />
+        <result column="user_country" jdbcType="VARCHAR" property="userCountry" />
+        <result column="user_province" jdbcType="VARCHAR" property="userProvince" />
+        <result column="user_city" jdbcType="VARCHAR" property="userCity" />
+        <result column="user_update_time" jdbcType="BIGINT" property="userUpdateTime" />
+        <result column="user_geo_status" jdbcType="INTEGER" property="userGeoStatus" />
+        <result column="user_language" jdbcType="VARCHAR" property="userLanguage" />
+        <result column="user_timezone" jdbcType="VARCHAR" property="userTimezone" />
+        <result column="user_guide_step" jdbcType="INTEGER" property="userGuideStep" />
+        <result column="user_forward_page_status" jdbcType="INTEGER" property="userForwardPageStatus" />
+        <result column="data_misc" jdbcType="VARCHAR" property="dataMisc" />
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+        <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    </resultMap>
+    
+    <!--数据列-->
+    <sql id="Base_Column_List" >
+            id,
+            user_no,
+            user_name,
+            user_password,
+            user_nick_name,
+            user_tags,
+            user_qq,
+            user_avatar_type,
+            user_avatar_URL,
+            user_online_flag,
+            user_role,
+            user_status,
+            user_latest_login_time,
+            user_latest_login_IP,
+            user_checkin_time,
+            user_skin,
+            user_country,
+            user_province,
+            user_city,
+            user_update_time,
+            user_geo_status,
+            user_language,
+            user_timezone,
+            user_guide_step,
+            user_forward_page_status,
+            data_misc,
+            data_status,
+            create_time,
+            create_user_id,
+            create_user_name,
+            update_time,
+            update_user_id,
+            update_user_name
+    </sql>
+    
+    
+    <!-- 保存数据 -->
+    <insert id="save" parameterType="com.blog.model.BlogUser">
+        insert into ${blog}.blog_user (
+            id,
+            user_no,
+            user_name,
+            user_password,
+            user_nick_name,
+            user_tags,
+            user_qq,
+            user_avatar_type,
+            user_avatar_URL,
+            user_online_flag,
+            user_role,
+            user_status,
+            user_latest_login_time,
+            user_latest_login_IP,
+            user_checkin_time,
+            user_skin,
+            user_country,
+            user_province,
+            user_city,
+            user_update_time,
+            user_geo_status,
+            user_language,
+            user_timezone,
+            user_guide_step,
+            user_forward_page_status, 
+            data_misc,
+            data_status,
+            create_time,
+            create_user_id,
+            create_user_name,
+            update_time,
+            update_user_id,
+            update_user_name
+        ) values (
+            #{id,jdbcType=BIGINT},
+            #{userNo,jdbcType=INTEGER},
+            #{userName,jdbcType=VARCHAR},
+            #{userPassword,jdbcType=VARCHAR},
+            #{userNickName,jdbcType=VARCHAR},
+            #{userTags,jdbcType=VARCHAR},
+            #{userQq,jdbcType=VARCHAR},
+            #{userAvatarType,jdbcType=INTEGER},
+            #{userAvatarUrl,jdbcType=VARCHAR},
+            #{userOnlineFlag,jdbcType=CHAR},
+            #{userRole,jdbcType=VARCHAR},
+            #{userStatus,jdbcType=INTEGER},
+            #{userLatestLoginTime,jdbcType=BIGINT},
+            #{userLatestLoginIp,jdbcType=VARCHAR},
+            #{userCheckinTime,jdbcType=BIGINT},
+            #{userSkin,jdbcType=VARCHAR},
+            #{userCountry,jdbcType=VARCHAR},
+            #{userProvince,jdbcType=VARCHAR},
+            #{userCity,jdbcType=VARCHAR},
+            #{userUpdateTime,jdbcType=BIGINT},
+            #{userGeoStatus,jdbcType=INTEGER},
+            #{userLanguage,jdbcType=VARCHAR},
+            #{userTimezone,jdbcType=VARCHAR},
+            #{userGuideStep,jdbcType=INTEGER},
+            #{userForwardPageStatus,jdbcType=INTEGER}, 
+            #{dataMisc,jdbcType=VARCHAR},
+            #{dataStatus,jdbcType=INTEGER},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{createUserId,jdbcType=BIGINT},
+            #{createUserName,jdbcType=VARCHAR},
+            #{updateTime,jdbcType=TIMESTAMP},
+            #{updateUserId,jdbcType=BIGINT},
+            #{updateUserName,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <!-- 根据主键取得数据 -->
+    <select id="selectById" parameterType="java.util.ArrayList" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from ${blog}.blog_user 
+        <where>
+			<if test="id != null">
+				and id = #{id, jdbcType=BIGINT} 
+			</if>
+        </where>
+    </select>
+    
+    <!-- 根据主键删除数据 -->
+    <delete id="deleteById" parameterType="java.util.ArrayList">
+        delete from ${blog}.blog_user 
+        where 
+        id = #{id,jdbcType=BIGINT} 
+        
+    </delete>
+
+	<!-- 更新数据 -->
+    <update id="updateByIdSelective" parameterType="com.blog.model.BlogUser">
+        update ${blog}.blog_user
+        <set>
+			<if test="entityMap.userNo != null">
+			        user_no = #{entityMap.userNo,jdbcType=INTEGER},
+			</if>
+			<if test="entityMap.userName != null">
+			        user_name = #{entityMap.userName,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userPassword != null">
+			        user_password = #{entityMap.userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userNickName != null">
+			        user_nick_name = #{entityMap.userNickName,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userTags != null">
+			        user_tags = #{entityMap.userTags,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userQq != null">
+			        user_qq = #{entityMap.userQq,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userAvatarType != null">
+			        user_avatar_type = #{entityMap.userAvatarType,jdbcType=INTEGER},
+			</if>
+			<if test="entityMap.userAvatarUrl != null">
+			        user_avatar_URL = #{entityMap.userAvatarUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userOnlineFlag != null">
+			        user_online_flag = #{entityMap.userOnlineFlag,jdbcType=CHAR},
+			</if>
+			<if test="entityMap.userRole != null">
+			        user_role = #{entityMap.userRole,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userStatus != null">
+			        user_status = #{entityMap.userStatus,jdbcType=INTEGER},
+			</if>
+			<if test="entityMap.userLatestLoginTime != null">
+			        user_latest_login_time = #{entityMap.userLatestLoginTime,jdbcType=BIGINT},
+			</if>
+			<if test="entityMap.userLatestLoginIp != null">
+			        user_latest_login_IP = #{entityMap.userLatestLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userCheckinTime != null">
+			        user_checkin_time = #{entityMap.userCheckinTime,jdbcType=BIGINT},
+			</if>
+			<if test="entityMap.userSkin != null">
+			        user_skin = #{entityMap.userSkin,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userCountry != null">
+			        user_country = #{entityMap.userCountry,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userProvince != null">
+			        user_province = #{entityMap.userProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userCity != null">
+			        user_city = #{entityMap.userCity,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userUpdateTime != null">
+			        user_update_time = #{entityMap.userUpdateTime,jdbcType=BIGINT},
+			</if>
+			<if test="entityMap.userGeoStatus != null">
+			        user_geo_status = #{entityMap.userGeoStatus,jdbcType=INTEGER},
+			</if>
+			<if test="entityMap.userLanguage != null">
+			        user_language = #{entityMap.userLanguage,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userTimezone != null">
+			        user_timezone = #{entityMap.userTimezone,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.userGuideStep != null">
+			        user_guide_step = #{entityMap.userGuideStep,jdbcType=INTEGER},
+			</if>
+			<if test="entityMap.userForwardPageStatus != null">
+			        user_forward_page_status = #{entityMap.userForwardPageStatus,jdbcType=INTEGER}
+			</if>
+			<if test="entityMap.dataMisc != null">
+			        data_misc = #{entityMap.dataMisc,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.dataStatus != null">
+			        data_status = #{entityMap.dataStatus,jdbcType=INTEGER},
+			</if>
+			<if test="entityMap.createUserId != null">
+			        create_user_id = #{entityMap.createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="entityMap.createUserName != null">
+			        create_user_name = #{entityMap.createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="entityMap.updateTime != null">
+			        update_time = #{entityMap.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="entityMap.updateUserId != null">
+			        update_user_id = #{entityMap.updateUserId,jdbcType=BIGINT},
+			</if>
+			<if test="entityMap.updateUserName != null">
+			        update_user_name = #{entityMap.updateUserName,jdbcType=VARCHAR}
+			</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <!-- 批量插入 -->
+     <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO ${blog}.blog_user (
+               id,
+               user_no,
+               user_name,
+               user_password,
+               user_nick_name,
+               user_tags,
+               user_qq,
+               user_avatar_type,
+               user_avatar_URL,
+               user_online_flag,
+               user_role,
+               user_status,
+               user_latest_login_time,
+               user_latest_login_IP,
+               user_checkin_time,
+               user_skin,
+               user_country,
+               user_province,
+               user_city,
+               user_update_time,
+               user_geo_status,
+               user_language,
+               user_timezone,
+               user_guide_step,
+               user_forward_page_status, 
+               data_misc,
+               data_status,
+               create_time,
+               create_user_id,
+               create_user_name,
+               update_time,
+               update_user_id,
+               update_user_name
+        ) 
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT 
+                  #{item.id,jdbcType=BIGINT},
+                  #{item.userNo,jdbcType=INTEGER},
+                  #{item.userName,jdbcType=VARCHAR},
+                  #{item.userPassword,jdbcType=VARCHAR},
+                  #{item.userNickName,jdbcType=VARCHAR},
+                  #{item.userTags,jdbcType=VARCHAR},
+                  #{item.userQq,jdbcType=VARCHAR},
+                  #{item.userAvatarType,jdbcType=INTEGER},
+                  #{item.userAvatarUrl,jdbcType=VARCHAR},
+                  #{item.userOnlineFlag,jdbcType=CHAR},
+                  #{item.userRole,jdbcType=VARCHAR},
+                  #{item.userStatus,jdbcType=INTEGER},
+                  #{item.userLatestLoginTime,jdbcType=BIGINT},
+                  #{item.userLatestLoginIp,jdbcType=VARCHAR},
+                  #{item.userCheckinTime,jdbcType=BIGINT},
+                  #{item.userSkin,jdbcType=VARCHAR},
+                  #{item.userCountry,jdbcType=VARCHAR},
+                  #{item.userProvince,jdbcType=VARCHAR},
+                  #{item.userCity,jdbcType=VARCHAR},
+                  #{item.userUpdateTime,jdbcType=BIGINT},
+                  #{item.userGeoStatus,jdbcType=INTEGER},
+                  #{item.userLanguage,jdbcType=VARCHAR},
+                  #{item.userTimezone,jdbcType=VARCHAR},
+                  #{item.userGuideStep,jdbcType=INTEGER},
+                  #{item.userForwardPageStatus,jdbcType=INTEGER}, 
+                  #{item.dataMisc,jdbcType=VARCHAR},
+                  #{item.dataStatus,jdbcType=INTEGER},
+                  #{item.createTime,jdbcType=TIMESTAMP},
+                  #{item.createUserId,jdbcType=BIGINT},
+                  #{item.createUserName,jdbcType=VARCHAR},
+                  #{item.updateTime,jdbcType=TIMESTAMP},
+                  #{item.updateUserId,jdbcType=BIGINT},
+                  #{item.updateUserName,jdbcType=VARCHAR}
+            FROM DUAL
+        </foreach>
+    </insert>
+    
+     <!-- 单条逻辑删除 -->
+     <update id="logicalSelectById">
+        update ${blog}.blog_user set status = 0 , update_time = #{updateTime,jdbcType=TIMESTAMP} , update_oper_id = #{updateOperId,jdbcType=BIGINT} , update_oper_name = #{updateOperName,jdbcType=VARCHAR} 
+        where 
+        id = #{id,jdbcType=BIGINT} 
+        and status = 1
+     </update>
+     
+     <!-- 批量逻辑删除 -->
+     <update id="batchLogicalSelectById" parameterType="java.util.List">  
+        update ${blog}.blog_user  set status = 0 , update_time = #{updateTime,jdbcType=TIMESTAMP} , update_oper_id = #{updateOperId,jdbcType=BIGINT} , update_oper_name = #{updateOperName,jdbcType=VARCHAR}  
+        where 
+        id in  
+         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">  
+            ${item}
+         </foreach>
+        and status = 1
+     </update> 
+</mapper>
