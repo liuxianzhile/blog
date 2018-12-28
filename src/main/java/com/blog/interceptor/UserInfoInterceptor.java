@@ -20,6 +20,7 @@ import com.blog.util.UserInfoValidationUtil;
 import com.blog.vo.DefaultResultVO;
 
 /**
+ * 自定义注解@Before拦截器
  * @file UserInfoInterceptor.java
  * @author FuNian Cui
  * @date 2018年12月25日 下午1:16:55
@@ -74,12 +75,13 @@ public class UserInfoInterceptor extends HandlerInterceptorAdapter {
         
         HttpServletRequestWrapperUtil requestWrapper = new HttpServletRequestWrapperUtil(request);
         byte[] body = requestWrapper.getBody();
-        logger.info("请求Body: ", body);
+        logger.info("请求Body: （" + body.length + "）" + body.toString());
         // 默认记录后台接口请求日志记录
-        String url = request.getRequestURL().toString();
-        String methodName = request.getMethod();
-        String uri = request.getRequestURI();
-        String queryString = request.getQueryString();
+        String url = requestWrapper.getRequestURL().toString();
+        String methodName = requestWrapper.getMethod();
+        String uri = requestWrapper.getRequestURI();
+        //获取带参数查询。 post方法传的参数，getQueryString（）得不到，它只对get方法得到的数据有效。
+        String queryString = requestWrapper.getQueryString();
         logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s ", url, methodName, uri, queryString));
         return true;
 	}
