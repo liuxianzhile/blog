@@ -38,9 +38,17 @@
 		(3)、配置了<context:component-scan />，就不用在配置<context:annotation-config/>, 因为前者已经包含了后者。
 		(4)、<context:annotation-config/>的作用是向spring容器注入AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor 及RequiredAnnotationBeanPostProcessor 四个beanPostProcessor。从而使得@Autowired等注解生效。
 	-->
-	<context:component-scan base-package="com.blog.*" />
+	<!--自动扫描该包，使spring-mvc只扫描controller包中的类(其中只有@Controller控制器)，不会重复扫描到@Service或者@Component-->
+	<context:component-scan base-package="com.blog.controller" />
 	
+	<!-- 拦截器 -->
 	<mvc:interceptors>
-        <bean class="com.blog.interceptor.UserInfoInterceptor" />
+        <mvc:interceptor>
+        	<!-- 对所有的请求拦截使用/** ,对某个模块下的请求拦截使用：/myPath/* -->
+        	<mvc:mapping path="/**"/>
+        	<!-- 不进行拦截 -->
+        	<!-- <mvc:exclude-mapping path="/index.html"/> -->
+        	<bean class="com.blog.interceptor.UserInfoInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 </beans>
