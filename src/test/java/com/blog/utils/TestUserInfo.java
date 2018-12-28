@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 import org.junit.Test;
@@ -26,5 +28,12 @@ public class TestUserInfo {
 			e.printStackTrace();
 		}
         CFG.load(resourceAsStream);
+	}
+	
+	@Test
+	public void testDateTimeFormatter() {
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter time = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+		System.out.println(now.format(time));
 	}
 }
