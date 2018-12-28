@@ -3,8 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<!-- 引入jdbc配置文件，可以取文件中的相关值 -->
+	<properties resource="jdbc.properties" />
 	<!-- 配置全局属性 -->
 	<settings>
+		<!-- web应用中用了spring之类的框架，他会包含commons-log包，根据优先级，他就不会去用log4j了，所以还得在mybatis配置文件中配置一条语句 -->
+		<setting name="logImpl" value="LOG4J2"/>
+		
 		<!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
 		<setting name="useGeneratedKeys" value="true" />
 
@@ -13,6 +18,7 @@
 
 		<!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
+		
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 </configuration>
