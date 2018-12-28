@@ -30,7 +30,7 @@
 				%M 					输出所在方法名
 				%l  				输出语句所在的行数, 包括类名、方法名、文件名、行数 (这个比较强大)
 		-->
-        <Property name="patternLayout">[%d{yyyy-MM-dd'T'HH:mm:ss,SSSXXX}] %-5p [%t] %c{2} - %m%n]</Property>
+        <Property name="patternLayout">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n</Property>
         
         <!--
         	${sys:catalina.home} 等价于 System.getProperty("catalina.home") 就是Tomcat的根目录：  C:\apache-tomcat-7.0.77
@@ -140,6 +140,23 @@
         </appender>-->
     </Appenders>
     <loggers>
+		<!-- 
+			将level定义为DEBUG则只会打印出SQL语句,SQL参数以及结果条数
+			将level定义为TRACE则会打印出SQL语句,SQL参数以及结果集还有结果条数
+		-->
+		<logger name="com.blog.dao" level="TRACE"></logger>
+		<logger name="org.mybatis" level="DEBUG"></logger>
+		
+		<!-- sql 以及耗费的执行时间 -->  
+		<logger name="jdbc.sqltiming" level="INFO" additivity="false"></logger>  
+		<!-- 执行之后的返回结果 -->  
+		<logger name="jdbc.resultsettable" level="OFF"></logger>  
+		<!-- 只有sql -->  
+		<logger name="jdbc.sqlonly" level="OFF"></logger>  
+		<logger name="jdbc.audit" level="OFF"></logger>  
+		<logger name="jdbc.resultset" level="OFF"></logger>  
+		<!-- 能看到数据库的连接数 -->  
+		<logger name="jdbc.connection" level="OFF"></logger>  
 
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <logger name="org.springframework" level="INFO"></logger>
