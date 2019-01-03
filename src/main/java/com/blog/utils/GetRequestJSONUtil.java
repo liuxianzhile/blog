@@ -1,4 +1,4 @@
-package com.blog.util;
+package com.blog.utils;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author FuNian Cui
  * @date 2018年12月25日 下午3:24:29
  */
-public class GetRequestJSONUtils {
+public class GetRequestJSONUtil {
 
 	/**
 	 * request 中 json 字符串的内容

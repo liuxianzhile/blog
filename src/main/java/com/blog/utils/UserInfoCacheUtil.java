@@ -1,4 +1,4 @@
-package com.blog.util;
+package com.blog.utils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -111,5 +111,14 @@ public class UserInfoCacheUtil {
             return null;
         }
         return Integer.valueOf(stringValue);
+    }
+    
+    /**
+     * 获取当前配置文件中对应键的所属值
+     * @param key 指定键值
+     * @return 对应键的所属值, 如果未找到对应键值对 返回{@code null}
+     */
+    public static String get(final String key) {
+        return CFG.getProperty(key);
     }
 }

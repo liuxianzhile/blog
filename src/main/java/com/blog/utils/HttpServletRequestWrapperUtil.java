@@ -1,4 +1,4 @@
-package com.blog.util;
+package com.blog.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

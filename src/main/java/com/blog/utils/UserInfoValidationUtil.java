@@ -1,4 +1,4 @@
-package com.blog.util;
+package com.blog.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,10 +13,31 @@ public class UserInfoValidationUtil{
      * 用户名最大长度
      */
     public static final int MAX_USER_NAME_LENGTH = 20;
+    
     /**
      * 用户名最小长度
      */
     public static final int MIN_USER_NAME_LENGTH = 1;
+    
+	/**
+     * 用户状态 - 合法
+     */
+    public static final int USER_STATUS_VALID = 0;
+    
+    /**
+     * 用户状态 - 无效登录
+     */
+	public static final int USER_STATUS_INVALID_LOGIN = 3;
+	
+	/**
+     * 用户状态 - 账号失效
+     */
+    public static final int USER_STATUS_DEACTIVATED = 4;
+    
+    /**
+     * 空用户名
+     */
+	public static final String NULL_USER_NAME = "_";
 	
 	/**
 	 * 用户姓名校验
