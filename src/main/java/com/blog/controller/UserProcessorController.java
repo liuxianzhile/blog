@@ -41,7 +41,7 @@ public class UserProcessorController {
 		logger.info("用户注册");
 		BlogUser blogUser = new BlogUser();
 		try {
-			blogUser = userProcessorService.registerUser(userResignDTO);
+			userProcessorService.registerUser(userResignDTO);
 		} catch(Exception e) {
 			logger.error("错误信息", e);
 		}

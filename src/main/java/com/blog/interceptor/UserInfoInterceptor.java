@@ -14,13 +14,13 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.alibaba.fastjson.JSONObject;
 import com.blog.annotation.Before;
 import com.blog.enums.ResultCodeEnum;
-import com.blog.util.GetRequestJSONUtils;
-import com.blog.util.HttpServletRequestWrapperUtil;
-import com.blog.util.UserInfoValidationUtil;
+import com.blog.utils.GetRequestJSONUtil;
+import com.blog.utils.HttpServletRequestWrapperUtil;
+import com.blog.utils.UserInfoValidationUtil;
 import com.blog.vo.DefaultResultVO;
 
 /**
- * 自定义注解@Before拦截器
+ * 用户信息校验拦截器
  * @file UserInfoInterceptor.java
  * @author FuNian Cui
  * @date 2018年12月25日 下午1:16:55
@@ -51,7 +51,7 @@ public class UserInfoInterceptor extends HandlerInterceptorAdapter {
         } else {
         	//进行校验
         	//ServletRequest的getReader()和getInputStream()两个方法只能被调用一次，而且不能两个都调用。
-        	String jsonString = GetRequestJSONUtils.getRequestJsonString(request);
+        	String jsonString = GetRequestJSONUtil.getRequestJsonString(request);
         	JSONObject jsonObject = JSONObject.parseObject(jsonString);
         	logger.info("jsonObject：" + jsonObject);
         	
