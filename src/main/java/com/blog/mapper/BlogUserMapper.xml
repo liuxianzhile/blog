@@ -365,5 +365,31 @@
             ${item}
          </foreach>
         and status = 1
-     </update> 
+     </update>
+     
+     <!-- 根据用户名查询用户信息 -->
+     <select id="queryUserByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+     	select 
+     		<include refid="Base_Column_List"/>
+     	from 
+     		${blog}.blog_user
+     	<where>
+     		<if test="userName != null and userName.trim().length() > 0">
+     			and user_name = #{userName, jdbcType=VARCHAR}
+     		</if>
+     	</where>
+     </select>
+     
+     <!-- 根据邮箱查询用户信息 -->
+     <select id="queryUserByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+     	select 
+     		<include refid="Base_Column_List"/>
+     	from 
+     		${blog}.blog_user
+     	<where>
+     		<if test="userEmail != null and userEmail.trim().length() > 0">
+     			and user_name = #{userEmail, jdbcType=VARCHAR}
+     		</if>
+     	</where>
+     </select>
 </mapper>
