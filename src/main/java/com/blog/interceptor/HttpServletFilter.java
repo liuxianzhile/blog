@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.blog.util.HttpServletRequestWrapperUtil;
+import com.blog.utils.HttpServletRequestWrapperUtil;
 
 /**
  * 请求参数过滤器
