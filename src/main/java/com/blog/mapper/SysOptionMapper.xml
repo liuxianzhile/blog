@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- SysOptionMapper，，对应表sys_option -->
+<mapper namespace="com.blog.dao.SysOptionMapper">
+    <!-- 返回结果集Map -->
+    <resultMap id="BaseResultMap" type="com.blog.model.SysOption"> 
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="option_value" jdbcType="LONGVARCHAR" property="optionValue" />
+        <result column="option_category" jdbcType="VARCHAR" property="optionCategory" />
+    </resultMap>
+    
+    <!--数据列-->
+    <sql id="Base_Column_List" >
+            id,
+            option_value,
+            option_category
+    </sql>
+    
+    
+    <!-- 保存数据 -->
+    <insert id="save" parameterType="com.blog.model.SysOption">
+        insert into ${blog}.sys_option (
+            id,
+            option_value,
+            option_category
+        ) values (
+            #{id,jdbcType=VARCHAR},
+            #{optionValue,jdbcType=LONGVARCHAR},
+            #{optionCategory,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <!-- 根据主键取得数据 -->
+    <select id="selectById" parameterType="java.util.ArrayList" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+         from ${blog}.sys_option 
+         where 
+         id = #{id} 
+         
+    </select>
+  
+    <!-- 根据主键删除数据 -->
+    <delete id="deleteById" parameterType="java.util.ArrayList">
+        delete from ${blog}.sys_option 
+        where 
+        id = #{id,jdbcType=VARCHAR} 
+        
+    </delete>
+
+	<!-- 更新数据 -->
+    <update id="updateByIdSelective" parameterType="com.blog.model.SysOption">
+        update ${blog}.sys_option
+        <set>
+                        <if test="entityMap.optionValue != null">
+                                option_value = #{entityMap.optionValue,jdbcType=LONGVARCHAR},
+                        </if>
+                        <if test="entityMap.optionCategory != null">
+                                option_category = #{entityMap.optionCategory,jdbcType=VARCHAR}
+                        </if>
+        </set>
+        where 
+        id = #{id,jdbcType=VARCHAR} and update_time = #{entityMap.indbUpdateTime,jdbcType=TIMESTAMP} 
+		      
+    </update>
+    
+    <!-- 批量插入 -->
+     <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO ${blog}.sys_option (
+               id,
+               option_value,
+               option_category
+        ) 
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT 
+                  #{item.id,jdbcType=VARCHAR},
+                  #{item.optionValue,jdbcType=LONGVARCHAR},
+                  #{item.optionCategory,jdbcType=VARCHAR}
+            FROM DUAL
+        </foreach>
+    </insert>
+    
+     <!-- 单条逻辑删除 -->
+     <update id="logicalSelectById">
+        update ${blog}.sys_option set status = 0 , update_time = #{updateTime,jdbcType=TIMESTAMP} , update_oper_id = #{updateOperId,jdbcType=BIGINT} , update_oper_name = #{updateOperName,jdbcType=VARCHAR} 
+        where 
+        id = #{id,jdbcType=BIGINT} 
+		
+        and status = 1
+     </update>
+     
+     <!-- 批量逻辑删除 -->
+     <update id="batchLogicalSelectById" parameterType="java.util.List">  
+        update ${blog}.sys_option set status = 0 , update_time = #{updateTime,jdbcType=TIMESTAMP} , update_oper_id = #{updateOperId,jdbcType=BIGINT} , update_oper_name = #{updateOperName,jdbcType=VARCHAR}  
+        where 
+        id in  
+         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">  
+            ${item}
+         </foreach>
+         
+        and status = 1
+     </update>
+     
+     <!-- 根据ID查询相应信息 -->
+     <select id="selectByOptionId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select 
+			<include refid="Base_Column_List"/>
+		from 
+			${blog}.sys_option
+		<where>
+			id = #{id, jdbcType=VARCHAR}
+		</where>
+     </select>
+</mapper>
