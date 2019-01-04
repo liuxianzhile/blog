@@ -16,7 +16,7 @@
 		<!-- 测试包版本号 -->
 		<junit.version>4.12</junit.version>
 		<!-- spring版本号 -->		
-		<spring.version>4.3.2.RELEASE</spring.version>
+		<spring.version>4.3.18.RELEASE</spring.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.8</mybatis.version>
 		<!-- spring整合mybatis包的版本号 -->
