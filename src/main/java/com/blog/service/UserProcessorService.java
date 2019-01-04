@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.blog.dao.BlogUserMapper;
+import com.blog.dao.SysOptionMapper;
 import com.blog.dto.UserResignDTO;
 import com.blog.enums.ResultCodeEnum;
 import com.blog.exception.BussinessException;
 import com.blog.model.BlogUser;
+import com.blog.model.SysOption;
 import com.blog.utils.UserInfoCacheUtil;
 import com.blog.utils.UserInfoValidationUtil;
+
+import cn.hutool.core.bean.BeanUtil;
 
 /**
  * 用户登录注册相关逻辑
@@ -25,7 +29,9 @@ import com.blog.utils.UserInfoValidationUtil;
 @Service
 public class UserProcessorService {
 	@Autowired
-	private BlogUserMapper blogUserMapper; 
+	private BlogUserMapper blogUserMapper;
+	@Autowired
+	private SysOptionMapper sysOptionMapper; 
 	
 	private static final Logger logger = LogManager.getLogger(UserProcessorService.class);
 
@@ -58,18 +64,19 @@ public class UserProcessorService {
 			updateFlag = true;
 		}
 		
+		BeanUtil.copyProperties(userResignDTO, blogUser);
 		
 		if(updateFlag) {
 			//更新用户信息
-			if (!AvatarQueryService.DEFAULT_AVATAR_URL.equals(userResignDTO.getAvatarURL())) {
+			if (!AvatarQueryService.DEFAULT_AVATAR_URL.equals(userResignDTO.getUserAvatarUrl())) {
                 if (UserInfoCacheUtil.getBoolean("qiniu.enabled")) {
                 	blogUser.setUserAvatarUrl(UserInfoCacheUtil.get("qiniu.domain") + "/avatar/" + blogUser.getUserNo() + "?" + new Date().getTime());
                 } else {
-                	blogUser.setUserAvatarUrl(userResignDTO.getAvatarURL() + "?" + new Date().getTime());
+                	blogUser.setUserAvatarUrl(userResignDTO.getUserAvatarUrl() + "?" + new Date().getTime());
                 }
 
-                if (255 < userResignDTO.getAvatarURL().length()) {
-                	logger.warn("用户 [" + userResignDTO.getUserName() + "]的头像地址[" + userResignDTO.getAvatarURL() + "] 超过了255");
+                if (255 < userResignDTO.getUserAvatarUrl().length()) {
+                	logger.warn("用户 [" + userResignDTO.getUserName() + "]的头像地址[" + userResignDTO.getUserAvatarUrl() + "] 超过了255");
                     blogUser.setUserAvatarUrl(AvatarQueryService.DEFAULT_AVATAR_URL);
                 }
                 blogUserMapper.updateByIdSelective(blogUser);
@@ -77,6 +84,11 @@ public class UserProcessorService {
 		} else {
 			//新增用户信息
 			blogUserMapper.save(blogUser);
+			
+			//用户数量统计
+			SysOption sysOption = sysOptionMapper.selectByOptionId("statisticMemberCount");
+			sysOption.setOptionValue(String.valueOf(Integer.valueOf(sysOption.getOptionValue()) + 1));
+			sysOptionMapper.updateByIdSelective(sysOption);
 		}
 		return blogUser.getUserNo();
 	}
