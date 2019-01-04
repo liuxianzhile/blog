@@ -12,6 +12,7 @@
         <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
         <result column="user_tags" jdbcType="VARCHAR" property="userTags" />
         <result column="user_qq" jdbcType="VARCHAR" property="userQq" />
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
         <result column="user_avatar_type" jdbcType="INTEGER" property="userAvatarType" />
         <result column="user_avatar_URL" jdbcType="VARCHAR" property="userAvatarUrl" />
         <result column="user_online_flag" jdbcType="CHAR" property="userOnlineFlag" />
@@ -388,7 +389,7 @@
      		${blog}.blog_user
      	<where>
      		<if test="userEmail != null and userEmail.trim().length() > 0">
-     			and user_name = #{userEmail, jdbcType=VARCHAR}
+     			and user_email = #{userEmail, jdbcType=VARCHAR}
      		</if>
      	</where>
      </select>

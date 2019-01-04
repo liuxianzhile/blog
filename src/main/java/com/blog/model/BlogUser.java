@@ -16,6 +16,8 @@ public class BlogUser extends Model{
     private String userTags;
     /** 用户 QQ */
     private String userQq;
+    /** 用户邮箱 **/
+    private String userEmail;
     /** 0：Gravatar，1：外链 */
     private Integer userAvatarType;
     /** 头像图片 URL */
@@ -245,4 +247,12 @@ public class BlogUser extends Model{
     public void setUserForwardPageStatus(Integer userForwardPageStatus){ 
         this.userForwardPageStatus = userForwardPageStatus;
     }
+    /** 用户邮箱 **/
+	public String getUserEmail() {
+		return userEmail;
+	}
+	/** 用户邮箱 **/
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 }
