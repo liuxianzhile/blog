@@ -16,5 +16,5 @@ public class UserResignDTO {
 	//用户状态
 	private Integer userStatus;
 	//头像图片URL
-	private String avatarURL;
+	private String userAvatarUrl;
 }
