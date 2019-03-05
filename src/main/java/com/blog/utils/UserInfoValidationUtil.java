@@ -40,6 +40,16 @@ public class UserInfoValidationUtil{
 	public static final String NULL_USER_NAME = "_";
 	
 	/**
+     * 用戶登录token
+     */
+	public static final String ACCESS_TOKEN_KEY = "TOKEN";
+	
+	/**
+     * 登录用户信息key
+     */
+	public static final String REDIS_LOGIN_USER_KEY = "login_user";
+	
+	/**
 	 * 用户姓名校验
 	 * 有效用户名需满足：
 	 * 		字数 [1, 20]
